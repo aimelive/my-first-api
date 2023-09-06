@@ -1,12 +1,25 @@
 package com.aimelive.api.myfirstapi.user;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table
-public class User {
+//@Table(name = "_user") //Use this line if we are using postgres
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -18,79 +31,48 @@ public class User {
             generator = "user_sequence"
     )
     private Long id;
-    private  String username;
-    private  String fullName;
+    private  String firstName;
+    private  String lastName;
     private LocalDate dob;
     @Column(unique=true)
     private  String email;
+    private String password;
 
-    public User() {
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User(
-            Long id,
-            String username,
-            String fullName,
-            LocalDate dob,
-            String email) {
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.dob = dob;
-        this.email = email;
-    }
-
-    public User(String username, String fullName, LocalDate dob, String email) {
-        this.username = username;
-        this.fullName = fullName;
-        this.dob = dob;
-        this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", dob=" + dob +
-                ", email='" + email + '\'' +
-                '}';
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

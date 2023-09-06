@@ -28,13 +28,14 @@ import io.swagger.v3.oas.annotations.servers.Server;
         ),
         servers = {
                 @Server(
-                        description = "Local ENV",
-                        url = "http://localhost:8080"
-                ),
-                @Server(
                         description = "Prod ENV",
                         url = "https://my-first-api.up.railway.app"
                 ),
+                @Server(
+                        description = "Local ENV",
+                        url = "http://localhost:8080"
+                ),
+
         }
 )
 @SecurityScheme(

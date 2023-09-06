@@ -1,6 +1,7 @@
 package com.aimelive.api.myfirstapi.user;
 
 import com.aimelive.api.myfirstapi.dto.ResponseData;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -16,7 +17,7 @@ import java.util.List;
         name = "User",
         description = "User management"
 )
-//@SecurityRequirement(name = "bearerAuth") //Protecting all routes of this controller
+@SecurityRequirement(name = "bearerAuth") //Protecting all routes of this controller
 public class UserController {
     private final UserService userService;
 
@@ -45,6 +46,7 @@ public class UserController {
             }
 
     )
+    @Hidden
     ResponseData<User> newUser(@RequestBody User newUserBody){
         return  userService.newUser(newUserBody);
     }
@@ -76,7 +78,6 @@ public class UserController {
       return  userService.getUserByEmail(email);
     }
     @PutMapping("/{id}")
-    @SecurityRequirement(name = "bearerAuth")
     @Operation(
             summary = "Update User",
             description = "Update User data by specifying ID and specify the JWT token of the current user so that you can update only your profile if you are not an admin"
@@ -86,7 +87,6 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @SecurityRequirement(name = "bearerAuth")
     @Operation(
             summary = "Delete User",
             description = "Remove user from the system by specifying ID and specify the JWT token of the current user so that you can delete only your account if you are not an admin"

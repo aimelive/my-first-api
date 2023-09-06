@@ -53,8 +53,8 @@ public class UserService {
 
     public ResponseData<User> updateUser(Long id,User newUser){
         User updatedUser = userRepository.findById(id).map(user -> {
-            user.setUsername(newUser.getUsername());
-            user.setFullName(newUser.getFullName());
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
             user.setEmail(newUser.getEmail());
             user.setDob(newUser.getDob());
             return userRepository.save(user);

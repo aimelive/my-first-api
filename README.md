@@ -8,3 +8,5 @@ This is a social media backend api made with Spring Boot Java, I made it only fo
 - Find single user by email
 - Update user account info
 - Delete user from the system
+### Swagger Docs 
+https://my-first-api.up.railway.app/swagger-ui/index.html

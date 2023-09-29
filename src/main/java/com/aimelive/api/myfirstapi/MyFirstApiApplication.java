@@ -6,10 +6,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
+@EnableScheduling
+@EnableTransactionManagement
 @RestController
 @Tag(
 		name = "Welcome",
@@ -36,5 +40,7 @@ public class MyFirstApiApplication {
 	public ResponseData<String> hello(){
 		return new ResponseData<String>("Welcome to our very first API.","Version 1.0.0");
 	}
+
+
 
 }

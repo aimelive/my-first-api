@@ -4,14 +4,13 @@ import com.aimelive.api.myfirstapi.dto.ResponseData;
 import com.aimelive.api.myfirstapi.user.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-
   private final UserRepository userRepository;
 
     @Autowired
@@ -26,6 +25,7 @@ public class UserService {
         );
     }
 
+    @Transactional
     public ResponseData<User> newUser(User newUserBody){
         Optional<User> userByEmail = userRepository.findUserByEmail(newUserBody.getEmail());
 
@@ -51,11 +51,10 @@ public class UserService {
        throw new IllegalStateException("User with this email "+email+" does not exist.");
     }
 
-    public ResponseData<User> updateUser(Long id,User newUser){
+    public ResponseData<User> updateUser(Long id, UpdateUserRequest newUser){
         User updatedUser = userRepository.findById(id).map(user -> {
             user.setFirstName(newUser.getFirstName());
             user.setLastName(newUser.getLastName());
-            user.setEmail(newUser.getEmail());
             user.setDob(newUser.getDob());
             return userRepository.save(user);
         }).orElseThrow(()-> new UserNotFoundException(id));

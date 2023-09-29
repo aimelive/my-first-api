@@ -56,8 +56,9 @@ public class UserController {
             summary = "List of all users",
             description = "GET all users registered"
     )
+
     public ResponseData<List<User>> getAllUsers(){
-       return userService.getAllUsers();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
@@ -77,13 +78,13 @@ public class UserController {
     ResponseData<User> getUserByEmail(@RequestParam String email){
       return  userService.getUserByEmail(email);
     }
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(
             summary = "Update User",
             description = "Update User data by specifying ID and specify the JWT token of the current user so that you can update only your profile if you are not an admin"
     )
-    ResponseData<User> updateUser(@RequestBody User newUser, @PathVariable Long id){
-        return userService.updateUser(id,newUser);
+    ResponseData<User> updateUser(@RequestBody UpdateUserRequest newUser, @PathVariable Long id){
+        return userService.updateUser(id, newUser);
     }
 
     @DeleteMapping("/{id}")

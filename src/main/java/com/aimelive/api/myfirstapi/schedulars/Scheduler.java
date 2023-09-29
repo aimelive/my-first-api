@@ -13,7 +13,7 @@ public class Scheduler {
 
     @Autowired
     private EmailService emailService;
-    @Scheduled(fixedRate = 60*60*1000)//Or cron job expression , here is an hour 60*1000=60 seconds
+    @Scheduled(cron="0 0 8 * * ?")//Everyday at 8:00
     public void fixedRateSch() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
@@ -23,8 +23,8 @@ public class Scheduler {
 
         emailService.sendEmail(
                 "aimendayambaje24@gmail.com",
-                "Murakoze Cyane Yari njyewe celine dio",
-                "<h1>Another banger</h1>A good email message is dedicated to you, right about now." + strDate
+                "My First Api - Progress",
+                "Hello Aime! Are you okay? what's your progress in SpringBoot level up. Please not down all of the things you and the one you are remaining with."
 
         );
     }
